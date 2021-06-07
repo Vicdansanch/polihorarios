@@ -1,11 +1,135 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+    <head> 
+        <meta charset="utf-8" />
+        <title>PoliHorarios</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/stylesheets/index.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="Titulo">
+                <center>
+                <h1>Selecciona los parámetros para generar tu horario</h1>
+                </center>
+            </div>
+                <form action="/api/filtrar" method="POST">
+                    <div class="head">
+                    
+                        <div class="input-box">
+                            <span class="details">Semestre</span>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Carrera</span>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">No. de materias</span>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Turno</span>
+                        </div>
+                        <div class="details">
+                        <select name="semestre" class="op">
+
+                            <option value="2">Segundo semestre</option>
+                            <option value="3">Tercer semestre</option>
+                            <option value="4">Cuarto semestre</option>
+                            <option value="5">Quinto semestre</option>
+                            <option value="6">Sexto semestre</option>
+                            <option value="7">Séptimo semestre</option>
+                            <option value="8">Octavo semestre</option>
+                        </select>
+                        </div>
+                        
+                        <div class="details">
+                        <select name="carrera" class="op">
+                            <option value="ingenieriainf">Ingenieria en Informática</option>
+                        </select>
+                        </div>
+                        
+                        <div class="details">
+                        <select name="clases" class="op">
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        </div>
+                        
+                        <div class="details">    
+                        <select name="turno"class="op">
+                            <option value="Matutino">Matutino</option>
+                            <option value="Vespertino">Vespertino</option>
+                            <option value="Mixto">Mixto</option>
+                        </select>
+                        </div>
+                    
+                    </div>
+                    <div class="button">
+                      <input class="button" type="submit" value="Generar horario"/>
+                    </div>
+                  </form>                  
+                    <!--<center><hr></center>-->
+                    <div class="TableTitulo">
+                        <h2>Horario de Clases</h2>
+                    </div>
+                    <div class="table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <td>Secuencia</td>
+                              <td>Materia</td>
+                              <td>Profesor/a</td>
+                              <td>Lunes</td>
+                              <td>Martes</td>
+                              <td>Miercoles</td>
+                              <td>Jueves</td>
+                              <td>Viernes</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <%
+                              if(results!=null){
+                                results.forEach(function(data){
+
+                            %>
+                            <tr>
+                              <td><%= data.Secuencia %></td>
+                              <td><%=data.Materia %></td>
+                              <td><%=data.Profesor %></td>
+                              <td><%=data.Turno %></td>
+                              <td><%=data.HorarioLunes %></td>
+                              <td><%=data.HorarioMartes %></td>
+                              <td><%=data.HorarioMiercoles %></td>
+                              <td><%=data.HorarioJueves %></td>
+                              <td><%=data.HorarioViernes %></td>
+                            </tr>
+                            <% }) 
+                              } else{
+                            %>
+                            <tr>
+                              <td colspan="8">Ningun Registro encontrado</td>
+                            </tr>
+                            <% }%>
+                          </tbody>  
+                            
+                        </table>
+                    </div>
+                                                                        
+                    <div class="button">
+                        <input type="submit" value="Vaciar"/>
+                    </div>
+                    <div class="buttonA">
+                        <a href="http://localhost:5000/admin/login">Ingresar como administrador</a>
+                    </div>
+                    <div class="clearfix"></div>
+                    
+                
+           
+        </div>
+    </body>
 </html>
+    

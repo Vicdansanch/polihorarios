@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="stylesheets/FormStyle.css">
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link href="/stylesheets/bootstrap.css" rel="stylesheet" type="text/css"/>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Materias</title>
+   </head>
+<body>
+  <div class="container">
+    <h2>Materias</h2>
+		<button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd">Agregar nuevo</button>
+    <table class="table table-striped" id="mytable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Secuencia</th>
+          <th>Materia</th>
+          <th>Profesor</th>
+          <th>Turno</th>
+          <th>HorarioLunes</th>
+          <th>HorarioMartes</th>
+          <th>HorarioMiercoles</th>
+          <th>HorarioJueves</th>
+          <th>HorarioViernes</th>
+        </tr>
+      </thead>
+      <tbody>
+         <%
+          if(results.length!=0){        
+          results.forEach(function(data){
+            console.log(data)          
+         %>
+        <tr>
+          <td><%=data.ID%></td>
+          <td><%= data.Secuencia %></td>
+          <td><%=data.Materia %></td>
+          <td><%=data.Profesor %></td>
+          <td><%=data.Turno %></td>
+          <td><%=data.HorarioLunes %></td>
+          <td><%=data.HorarioMartes %></td>
+          <td><%=data.HorarioMiercoles %></td>
+          <td><%=data.HorarioJueves %></td>
+          <td><%=data.HorarioViernes %></td>
+          <td>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%=data.ID%>"
+            data-secuencia="<%= data.Secuencia %>" data-materia="<%=data.Materia %>" data-profesor="<%=data.Profesor %>" data-turno="<%=data.Turno %>"
+            data-horarioLunes="<%=data.HorarioLunes %>" data-horarioMartes="<%=data.HorarioMartes %>" data-horarioMiercoles="<%=data.HorarioMiercoles %>"
+            data-horarioJueves="<%=data.HorarioJueves %>" data-horarioViernes="<%=data.HorarioViernes %>">Editar</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id=<%=data.ID%>>Borrar</a>
+          </td>
+        </tr>
+        <% }) 
+          } else{
+        %>
+        <tr>
+          <td colspan="7">No hay registros</td>
+        </tr>
+        <% }%>
+      </tbody>
+    </table>
+  </div>
+
+  <form action="/admin/api/addMateria" method="POST">
+    <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="title">Añadir materias</div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="user-details">
+              <div class="input-box">
+                <span class="details">Secuencia</span>
+                <input name="secuencia" type="text" placeholder="" required>
+              </div>
+              <div class="input-box">
+                <span class="details">Materia</span>
+                <input name="materia" type="text" placeholder="" required>
+              </div>
+              <div class="input-box">
+                <span class="details">Profesor/a</span>
+                <input name="profesor" type="text" placeholder="" required>
+              </div>
+              <div class="input-box">
+                <span class="details">Turno</span>
+                <input name="turno" type="text" placeholder="" required>
+              </div>
+              <div class="input-box">
+                <span class="details">Horario Lunes</span>
+                <input name="horarioLunes" type="text" placeholder="" >
+              </div>
+              <div class="input-box">
+                <span class="details">Horario Martes</span>
+                <input name="horarioMartes"type="text" placeholder="" >
+              </div>
+              <div class="input-box">
+                <span class="details">Horario Miercoles</span>
+                <input name="horarioMiercoles" type="text" placeholder="" >
+              </div>
+              <div class="input-box">
+                <span class="details">Horario Jueves</span>
+                <input name="horarioJueves" type="text" placeholder="" >
+              </div>
+              <div class="input-box">
+                <span class="details">Horario Viernes</span>
+                <input name="horarioViernes" type="text" placeholder="" >
+              </div>
+            </div>
+            <div class="button">
+              <button type="submit">
+                <input  value="Agregar">
+              </button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </form>
+  
+   <!-- Edit Materias Modal-->
+   <form action="/admin/api/actualizarMateria" method="post">
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Editar Materia</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">           
+           <div class="user-details">
+            <div class="input-box">
+              <span class="details">Secuencia</span>
+              <input name="secuencia" type="text"  placeholder="" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Materia</span>
+              <input name="materia" type="text"  placeholder="" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Profesor/a</span>
+              <input name="profesor" type="text"  placeholder="" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Turno</span>
+              <input name="turno" type="text"  placeholder="" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Horario Lunes</span>
+              <input name="horarioLunes"   type="text" placeholder="" >
+            </div>
+            <div class="input-box">
+              <span class="details">Horario Martes</span>
+              <input name="horarioMartes"  type="text" placeholder="" >
+            </div>
+            <div class="input-box">
+              <span class="details">Horario Miercoles</span>
+              <input name="horarioMiercoles" type="text" placeholder="" >
+            </div>
+            <div class="input-box">
+              <span class="details">Horario Jueves</span>
+              <input name="horarioJueves" type="text" placeholder="" >
+            </div>
+            <div class="input-box">
+              <span class="details">Horario Viernes</span>
+              <input name="horarioViernes" type="text" placeholder="" >
+            </div>
+          </div>          
+          <input type="hidden" name="id" class="id">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>          
+          <button type="submit"  class="btn btn-success">Actualizar</button>          
+         </div>        
+       </div>
+     </div>
+    </div>
+  </form>
+
+  <!--Delete Materias-->
+  <form id="add-row-form" action="/admin/api/deleteMateria" method="post">
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                 <h5 class="modal-title" id="myModalLabel">Borrar Materia</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                     <strong>¿Seguro que quieres borrar este registro?</strong>
+              </div>
+              <div class="modal-footer">
+                   <input type="hidden" name="id" class="form-control id2" required>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                   <button type="submit" class="btn btn-success">Borrar</button>
+              </div>
+           </div>
+       </div>
+    </div>
+  </form>
+  <script src="/javascripts/jquery-3.3.1.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+<script>
+    $(document).ready(function(){
+			//showing data to edit modal      
+      $('#mytable').on('click','.edit',function(){
+        var id = $(this).data('id');
+        var secuencia = $(this).data('secuencia');
+        var materia = $(this).data('materia');
+        var profesor=$(this).data('profesor')
+        var turno = $(this).data('turno')
+        var horarioLunes =$(this).data('horarioLunes')
+        var horarioMartes =$(this).data('horarioMartes')
+        var horarioMiercoles =$(this).data('horarioMiercoles')
+        var horarioJueves= $(this).data('horarioJueves')
+        var horarioViernes= $(this).data('horarioViernes')
+        $('#EditModal').modal('show');
+        $('.id').val(id);
+        $('.secuencia').val(secuencia);
+        $('.materia').val(materia);
+        $('.profesor').val(profesor);
+        $('.turno').val(turno);
+        $('.horarioLunes').val(horarioLunes);
+        $('.horarioMartes').val(horarioMartes);
+        $('.horarioMiercoles').val(horarioMiercoles);
+        $('.horarioJueves').val(horarioJueves);
+        $('.horarioViernes').val(horarioViernes);
+      });
+			//showing delete record modal
+			$('#mytable').on('click','.delete',function(){
+        var id = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.id2').val(id);
+      });
+
+    });
+</script>
+</body>
+</html>
